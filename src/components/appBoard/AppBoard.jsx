@@ -38,7 +38,7 @@ class BoardStatus extends Component {
         return (
             <>
                 <div className="board__column">
-                    <h2 className="board__column__heading">To do</h2>
+                    <h2 className="board__column__heading">{this.props.status}</h2>
 
                     {this.renderTasks(this.props.tasks)}
                 </div>
