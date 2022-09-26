@@ -1,0 +1,44 @@
+.board
+    border: 1px solid black
+    padding: 20px 10px
+    border-radius: 10px
+    display: grid
+    grid-template-columns: 31% 31% 31%
+    gap: 30px
+    justify-content: center
+    min-height: 100px
+    &__column
+        position: relative
+        &::after
+            position: absolute
+            content: ""
+            width: 2px
+            min-height: 95%
+            background-color: grey
+            top: 5%
+            left: calc(100% + 13px)
+        &:last-child
+            &::after
+                content: ""
+                visibility: hidden
+        &__heading
+            text-align: center
+        &__item
+            border: 1px solid black
+            display: flex
+            justify-content: space-between
+            align-items: center
+            padding: 15px
+            border-radius: 10px
+            margin-top: 20px
+            &-initials
+                width: 65px
+                height: 65px
+                border-radius: 100%
+                text-align: center
+                font-size: 25px
+                color: white
+                padding: 5px
+                line-height: 55px
+            &-title
+                width: 225px
