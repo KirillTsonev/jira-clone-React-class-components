@@ -9,14 +9,25 @@ class TicketService {
         return await res.json()
     }
 
-    getTasks = async (id) => {
-        const res = await this.getResource(`https://jsonplaceholder.typicode.com/todos/${id}`)
-        return res
+    postTask = async (data) => {
+        await fetch("https://6348588d0b382d796c6fde8e.mockapi.io/tasks", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data),
+        })
     }
 
-    getUsers = async (id) => {
-        const res = await this.getResource(`https://jsonplaceholder.typicode.com/users/${id}`)
-        return res.name.replace(/[a-z ]/g, "")
+    deleteTask = async (id) => {
+        await fetch(`https://6348588d0b382d796c6fde8e.mockapi.io/tasks/${id}`, {
+            method: "DELETE"
+        })
+    }
+
+    getTasks = async () => {
+        const res = await this.getResource(`https://6348588d0b382d796c6fde8e.mockapi.io/tasks/`)
+        return res
     }
 }
 

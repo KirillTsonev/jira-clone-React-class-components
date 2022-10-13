@@ -3,83 +3,84 @@ import AppTicketList from "../appTicketList/AppTicketList";
 import AppBoard from "../appBoard/AppBoard";
 import { Component } from "react";
 import TicketService from "../../services/TicketService";
+// import logo from "../../images/theme-light-dark.svg"
 
 class App extends Component {
 	state = {
-		taskId: 1,
 		tasks: [],
-		users: [],
-		bgColors: [],
+		darkTheme: false,
 	}
 
 	ticketService = new TicketService()
 
-	onTaskId = () => {
-		this.setState(({ taskId }) => ({
-			taskId: taskId + 1
-		}))
-	}
-
-	pickColor = () => {
-		this.setState(({ bgColors }) => ({
-			bgColors: [...bgColors, { "backgroundColor": `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})` }]
-		}))
-	}
-
-	getInfo = (id) => {
-		if (id < 11) {
-			this.ticketService.getTasks(id)
-				.then(this.onTaskRequest)
-			this.ticketService.getUsers(id)
-				.then(this.onUserRequest)
-			this.onTaskId()
-			this.pickColor()
-		}
+	componentDidMount() {
+		this.ticketService.getTasks()
+			.then(this.onTaskRequest)
 	}
 
 	onTaskRequest = (res) => {
-		this.setState(({tasks}) => ({
-			tasks: [...tasks, {...res, completed: "To do"}]
-		}))
-	}
-
-	onUserRequest = (res) => {
-		this.setState(({users}) => ({
-			users: [...users, res]
+		this.setState(() => ({
+			tasks: [...res],
 		}))
 	}
 
 	onStatusChange = (id) => {
 		this.setState(({tasks}) => {
 			const arr = tasks.map((a, i) => {
-				if (i === id && a.completed === "To do") {
-					return {...a, completed: "In progress"}
-				} else if (i === id && a.completed === "In progress") {
-					return {...a, completed: "Done"}
+				if (i === id && a.status === "To do") {
+					return {...a, status: "In progress"}
+				} else if (i === id && a.status === "In progress") {
+					return {...a, status: "Done"}
 				} else {
 					return {...a}
 				}
 			})
-			return ({tasks: arr})
+			return {tasks: arr}
 		})
+	}
+
+	// changeTheme = () => {
+	// 	this.setState(({ darkTheme }) => ({
+	// 		darkTheme: !darkTheme
+	// 	}))
+	// 	if (this.state.darkTheme) {
+
+	// 	}
+	// }
+
+	onTaskPost = (text) => {
+		this.setState(({tasks}) => ({
+			tasks: [...tasks, text]
+		}))
+		this.ticketService.postTask(text)
+	}
+
+	onTaskDelete = (id) => {
+		const arr = this.state.tasks.filter(a => a.id !== id)
+		this.setState(() => ({
+			tasks: arr
+		}))
+		this.ticketService.deleteTask(id)
 	}
 
 	render() {
 		const {bgColors, users, tasks} = this.state
 
 		return (
-			<div className="container">
+			<div className={`container ${this.state.darkTheme ? "darkTheme" : null}`}>
 				<AppHeader>
-					<h2 className="container__header">Ticket List</h2>
+					<h2 className="container__header">Task List</h2>
 				</AppHeader>
+
+				{/* <img src={logo} alt="Theme changer" style={{"width": "50px"}} onClick={this.changeTheme}></img> */}
 
 				<AppTicketList
 					bgColors={bgColors}
 					users={users}
 					tasks={tasks}
-					onStatusChange={this.onStatusChange} />
-
-				<div className="button" onClick={() => this.getInfo(this.state.taskId)}>Add task</div>
+					onStatusChange={this.onStatusChange}
+					onTaskPost={this.onTaskPost}
+					onTaskDelete={this.onTaskDelete} />
 
 				<AppHeader>
 					<h2 className="container__header">Board</h2>
