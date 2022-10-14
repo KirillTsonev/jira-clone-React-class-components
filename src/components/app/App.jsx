@@ -3,7 +3,9 @@ import AppTicketList from "../appTicketList/AppTicketList";
 import AppBoard from "../appBoard/AppBoard";
 import { Component } from "react";
 import TicketService from "../../services/TicketService";
+import ModalTutorial from "../modalTutorial/modalTutorial";
 // import logo from "../../images/theme-light-dark.svg"
+import "./app.sass"
 
 class App extends Component {
 	state = {
@@ -114,7 +116,9 @@ class App extends Component {
 
 				<AppBoard 
 					tasks={tasks}
-					onStatusChange={this.onStatusChange}/>
+					onStatusChange={this.onStatusChange} />
+
+				<ModalTutorial/>
 			</div>
 		);
 	}
