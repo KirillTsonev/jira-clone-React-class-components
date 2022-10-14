@@ -1,5 +1,5 @@
 .board
-    border: 1px solid black
+    border: 2px solid black
     padding: 20px 10px
     border-radius: 10px
     display: grid
@@ -24,21 +24,20 @@
         &__heading
             text-align: center
         &__item
-            border: 1px solid black
+            border: 2px solid black
             display: flex
             justify-content: space-between
             align-items: center
             padding: 15px
             border-radius: 10px
             margin-top: 20px
-            &-initials
-                width: 65px
-                height: 65px
-                border-radius: 100%
-                text-align: center
-                font-size: 25px
-                color: white
-                padding: 5px
-                line-height: 55px
+            font-size: 18px
+            cursor: pointer
             &-title
-                width: 225px
+                width: 30%
+                overflow-wrap: break-word
+            &-body
+                width: 70%
+                border-left: black solid 2px
+                overflow-wrap: break-word
+                padding-left: 10px

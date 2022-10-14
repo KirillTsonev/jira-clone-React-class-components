@@ -13,15 +13,15 @@ class App extends Component {
 
 	ticketService = new TicketService()
 
+	onTaskRequest = (res) => {
+		this.setState(() => ({
+			tasks: res,
+		}))
+	}
+
 	componentDidMount() {
 		this.ticketService.getTasks()
 			.then(this.onTaskRequest)
-	}
-
-	onTaskRequest = (res) => {
-		this.setState(() => ({
-			tasks: [...res],
-		}))
 	}
 
 	onStatusChange = (id) => {
@@ -37,6 +37,10 @@ class App extends Component {
 			})
 			return {tasks: arr}
 		})
+
+		setTimeout(() => {
+			this.ticketService.putTask(id + 1, this.state.tasks[id])
+		}, 500); 
 	}
 
 	// changeTheme = () => {
@@ -52,7 +56,9 @@ class App extends Component {
 		this.setState(({tasks}) => ({
 			tasks: [...tasks, text]
 		}))
-		this.ticketService.postTask(text)
+		setTimeout(() => {
+			this.ticketService.postTask(text)
+		}, 500);
 	}
 
 	onTaskDelete = (id) => {
@@ -60,11 +66,31 @@ class App extends Component {
 		this.setState(() => ({
 			tasks: arr
 		}))
-		this.ticketService.deleteTask(id)
+		setTimeout(() => {
+			this.ticketService.deleteTask(id)
+		}, 500);
 	}
 
+	onTaskEdit = (id, title, body) => {
+		const arr = this.state.tasks.map((a, i) => {
+			if (i === id) {
+				return {...a, title: title, body: body}
+			} else {
+				return {...a}
+		}})
+
+		this.setState (() => {
+			return {tasks: arr}
+		})
+
+		setTimeout(() => {
+			this.ticketService.putTask(id + 1, this.state.tasks[id])
+		}, 500); 
+    }
+
 	render() {
-		const {bgColors, users, tasks} = this.state
+		const {tasks} = this.state
+		const toggle = tasks.map(a => a = a.toggle)
 
 		return (
 			<div className={`container ${this.state.darkTheme ? "darkTheme" : null}`}>
@@ -75,20 +101,18 @@ class App extends Component {
 				{/* <img src={logo} alt="Theme changer" style={{"width": "50px"}} onClick={this.changeTheme}></img> */}
 
 				<AppTicketList
-					bgColors={bgColors}
-					users={users}
 					tasks={tasks}
+					toggle={toggle}
 					onStatusChange={this.onStatusChange}
 					onTaskPost={this.onTaskPost}
-					onTaskDelete={this.onTaskDelete} />
+					onTaskDelete={this.onTaskDelete}
+					onTaskEdit={this.onTaskEdit} />
 
 				<AppHeader>
 					<h2 className="container__header">Board</h2>
 				</AppHeader>
 
 				<AppBoard 
-					bgColors={bgColors}
-					users={users}
 					tasks={tasks}
 					onStatusChange={this.onStatusChange}/>
 			</div>

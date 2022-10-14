@@ -19,16 +19,37 @@ class TicketService {
         })
     }
 
+    putTask = async (id, data) => {
+        await fetch(`https://6348588d0b382d796c6fde8e.mockapi.io/tasks/${id}`, {
+            method: "PUT",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data),
+        })
+    }
+
     deleteTask = async (id) => {
         await fetch(`https://6348588d0b382d796c6fde8e.mockapi.io/tasks/${id}`, {
             method: "DELETE"
         })
     }
 
-    getTasks = async () => {
-        const res = await this.getResource(`https://6348588d0b382d796c6fde8e.mockapi.io/tasks/`)
-        return res
+    _transformTasks = (res) => {
+        return {
+            title: res.title,
+            body: res.body,
+            status: res.status,
+            id: res.id,
+            toggle: false
+        }
     }
+
+    getTasks = async () => {
+        let res = await this.getResource(`https://6348588d0b382d796c6fde8e.mockapi.io/tasks/`)
+        return res.map(this._transformTasks)
+    }
+
 }
 
 export default TicketService

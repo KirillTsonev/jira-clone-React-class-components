@@ -9,18 +9,16 @@ class BoardStatus extends Component {
 
     renderTasks = (arr) => {
         const tasks = arr.map((a, i) => {
-            if (a.completed === this.props.status) {
+            if (a.status === this.props.status) {
                 return (
                     <div
-                        key={a.id}
+                        key={i}
                         onClick={() => this.onStatusChange(i)}
                         className="board__column__item">
     
-                        <div
-                            style={this.props.bgColors[i]}
-                            className="board__column__item-initials">{this.props.users[i]}</div>
-    
                         <div className="board__column__item-title">{a.title}</div>
+
+                        <div className="board__column__item-body">{a.body}</div>
                     </div>
                 )
             }
@@ -53,29 +51,23 @@ class AppBoardDone extends BoardStatus {}
 
 class AppBoard extends Component {
     render() {
-        const {bgColors, users, tasks} = this.props
+        const {tasks} = this.props
 
         return (
             <div className="board">
                 <AppBoardToDo
-                    bgColors={bgColors}
-                    users={users}
                     tasks={tasks}
                     status={"To do"}
                     onStatusChange={this.props.onStatusChange}
                      />
 
                 <AppBoardInProgress
-                    bgColors={bgColors}
-                    users={users}
                     tasks={tasks}
                     status={"In progress"}
                     onStatusChange={this.props.onStatusChange}
                      />
 
                 <AppBoardDone
-                    bgColors={bgColors}
-                    users={users}
                     tasks={tasks}
                     status={"Done"}
                     onStatusChange={this.props.onStatusChange}
