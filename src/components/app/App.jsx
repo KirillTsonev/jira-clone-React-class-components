@@ -96,6 +96,8 @@ class App extends Component {
 
 		return (
 			<div className={`container ${this.state.darkTheme ? "darkTheme" : null}`}>
+				<ModalTutorial/>
+
 				<AppHeader>
 					<h2 className="container__header">Task List</h2>
 				</AppHeader>
@@ -117,8 +119,6 @@ class App extends Component {
 				<AppBoard 
 					tasks={tasks}
 					onStatusChange={this.onStatusChange} />
-
-				<ModalTutorial/>
 			</div>
 		);
 	}
