@@ -4,6 +4,7 @@ import pencil from "../../images/pencil.png"
 import cancel from "../../images/x.png"
 import green from "../../images/green-check.png"
 
+// import logo from "../../images/theme-light-dark.svg"
 import "./appTicketList.sass"
 
 class AppTicketList extends Component {
@@ -15,17 +16,22 @@ class AppTicketList extends Component {
         toggleEdit: [],
         toggleDelete: [],
         counter: 1,
+        ballLeft: false,
     }
 
     componentDidMount() {
-        // localStorage.clear()
         if (localStorage.getItem("counter")) {
             this.setState(() => ({
                 counter: +localStorage.getItem("counter")
             }))
+        }
+        if (localStorage.getItem("ballLeft") && localStorage.getItem("ballLeft").length === 4) {
+            this.setState(() => ({
+                ballLeft: true
+            }))
         } else {
             this.setState(() => ({
-                counter: 1
+                ballLeft: false
             }))
         }
         setTimeout(() => {
@@ -73,8 +79,8 @@ class AppTicketList extends Component {
     }
 
     onTaskPost = () => {
-        const {title, body, status} = this.state
-        this.props.onTaskPost({title, body, status})
+        const { title, body, status } = this.state
+        this.props.onTaskPost({ title, body, status })
         this.setState(() => ({
             title: "",
             body: "",
@@ -115,7 +121,7 @@ class AppTicketList extends Component {
     }
 
     onTaskEdit = () => {
-        const {title, body, id} = this.state
+        const { title, body, id } = this.state
         const arr = this.state.toggleEdit.map(a => a = false)
         this.props.onTaskEdit(id, title, body)
         this.setState(() => ({
@@ -165,10 +171,18 @@ class AppTicketList extends Component {
         }
     }
 
+    onChangeTheme = () => {
+        this.props.onChangeTheme()
+        this.setState(() => ({
+            ballLeft: !this.state.ballLeft
+        }))
+        localStorage.setItem("ballLeft", !this.state.ballLeft)
+    }
+
     renderTasks = (arr) => {
         const tasks = arr.map((a, i) => {
             return (
-                <div 
+                <div
                     key={i}
                     className="ticket__list__item" >
 
@@ -188,27 +202,27 @@ class AppTicketList extends Component {
                     <div className="ticket__list__item-icons" >
                         <img alt="pencil"
                             src={pencil}
-                            style={this.state.toggleEdit[i] ? {"display": "none"} : {"display": "block"}}
+                            style={this.state.toggleEdit[i] ? { "display": "none" } : { "display": "block" }}
                             onClick={() => this.onPencilPress(i)} />
 
                         <img alt="cancel"
                             src={cancel}
-                            style={this.state.toggleEdit[i] ? {"display": "block"} : {"display": "none"}}
+                            style={this.state.toggleEdit[i] ? { "display": "block" } : { "display": "none" }}
                             onClick={() => this.onCancelPress(i)} />
 
                         <img alt="trash"
                             src={trash}
-                            style={this.state.toggleDelete[i] ? {"display": "none"} : {"display": "block"}}
+                            style={this.state.toggleDelete[i] ? { "display": "none" } : { "display": "block" }}
                             onClick={() => this.onDeletePress(i)} />
 
                         <div className="deleteContainer">
                             <img alt="confirm"
                                 src={green}
-                                style={this.state.toggleDelete[i] ? {"display": "block"} : {"display": "none"}}
+                                style={this.state.toggleDelete[i] ? { "display": "block" } : { "display": "none" }}
                                 onClick={() => this.onTaskDelete(a.id)} />
                             <img alt="cancel"
                                 src={cancel}
-                                style={this.state.toggleDelete[i] ? {"display": "block"} : {"display": "none"}}
+                                style={this.state.toggleDelete[i] ? { "display": "block" } : { "display": "none" }}
                                 onClick={() => this.onCancelPress(i)} />
                         </div>
                     </div>
@@ -236,7 +250,7 @@ class AppTicketList extends Component {
                             <div className="modal__btn-btn" onClick={() => this.onNextPressed()}>Next</div>
                         </div>
                     </div>
-                    
+
 
                     <div className={this.state.counter === 2 ? "modal__hint2 fadeIn" : "modal__hint2 fadeOut"}>
                         <div className="modal__hint2-text">
@@ -271,30 +285,40 @@ class AppTicketList extends Component {
 
                 <div className="taskHeader">
                     <form onSubmit={this.state.title ? () => this.onTaskPost(this.state) : null}>
-                        <input type="text" 
-                            name="title" 
-                            className="titleText" 
-                            placeholder="Task title" 
-                            onChange={(e) => this.onTitleChange(e.target.value)} 
+                        <input type="text"
+                            name="title"
+                            className="titleText"
+                            placeholder="Task title"
+                            onChange={(e) => this.onTitleChange(e.target.value)}
                             value={this.state.title} />
-                        
-                        <input type="text" 
-                            name="body" 
-                            className="titleBody" 
-                            placeholder="Task body" 
+
+                        <input type="text"
+                            name="body"
+                            className="titleBody"
+                            placeholder="Task body"
                             onChange={(e) => this.onBodyChange(e.target.value)}
                             value={this.state.body} />
                     </form>
 
-                    <div className="button" 
-                        onClick={this.state.title ? () => this.onTaskPost(this.state) : null} 
-                        style={!this.state.toggleEdit.some(a => a === true) ? {"display": "block"} : {"display": "none"}} >Add Task</div>
+                    <div className="buttonContainer">
+                        <div className="button"
+                            onClick={this.state.title ? () => this.onTaskPost(this.state) : null}
+                            style={!this.state.toggleEdit.some(a => a === true) ? { "display": "block" } : { "display": "none" }} >Add Task</div>
 
-                    <div className="button"
-                        onClick={this.state.title ? () => this.onTaskEdit() : null}
-                        style={!this.state.toggleEdit.some(a => a === true) ? {"display": "none"} : {"display": "block"}} >Edit task</div>
+                        <div className="button"
+                            onClick={this.state.title ? () => this.onTaskEdit() : null}
+                            style={!this.state.toggleEdit.some(a => a === true) ? { "display": "none" } : { "display": "block" }} >Edit task</div>
 
-                    <div className="tutorial" onClick={() => this.onTutorialPressed()}>?</div>
+                        <div className="tutorial" onClick={() => this.onTutorialPressed()}>?</div>
+                    
+                        <div className="switch" onClick={() => this.onChangeTheme()}>
+                            <div>🌞</div>
+
+                            <div className={`switch__ball ${this.state.ballLeft ? "switch__ball-right" : "switch__ball-left"}`}></div>
+
+                            <div>🌜</div>
+                        </div>
+                    </div>
                 </div>
 
                 <div>

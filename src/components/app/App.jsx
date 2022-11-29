@@ -3,7 +3,7 @@ import AppTicketList from "../appTicketList/AppTicketList";
 import AppBoard from "../appBoard/AppBoard";
 import { Component } from "react";
 import TicketService from "../../services/TicketService";
-// import logo from "../../images/theme-light-dark.svg"
+// import '../../style/style.sass'
 import "./app.sass"
 
 class App extends Component {
@@ -21,6 +21,15 @@ class App extends Component {
 	}
 
 	componentDidMount() {
+		if (localStorage.getItem("darkTheme") && localStorage.getItem("darkTheme").length === 4) {
+			this.setState(() => ({
+				darkTheme: true
+			}))
+		} else {
+			this.setState(() => ({
+				darkTheme: false
+			}))
+		}
 		this.ticketService.getTasks()
 			.then(this.onTaskRequest)
 	}
@@ -44,14 +53,12 @@ class App extends Component {
 		}, 500); 
 	}
 
-	// changeTheme = () => {
-	// 	this.setState(({ darkTheme }) => ({
-	// 		darkTheme: !darkTheme
-	// 	}))
-	// 	if (this.state.darkTheme) {
-
-	// 	}
-	// }
+	onChangeTheme = () => {
+		this.setState(({ darkTheme }) => ({
+			darkTheme: !darkTheme
+		}))
+		localStorage.setItem("darkTheme", !this.state.darkTheme)
+	}
 
 	onTaskPost = (text) => {
 		this.setState(({tasks}) => ({
@@ -94,12 +101,10 @@ class App extends Component {
 		const toggle = tasks.map(a => a = a.toggle)
 
 		return (
-			<div className={`container ${this.state.darkTheme ? "darkTheme" : null}`}>
+			<div className={`container ${this.state.darkTheme ? "darkTheme" : ""}`}>
 				<AppHeader>
 					<h2 className="container__header">Task List</h2>
 				</AppHeader>
-
-				{/* <img src={logo} alt="Theme changer" style={{"width": "50px"}} onClick={this.changeTheme}></img> */}
 
 				<AppTicketList
 					tasks={tasks}
@@ -107,7 +112,8 @@ class App extends Component {
 					onStatusChange={this.onStatusChange}
 					onTaskPost={this.onTaskPost}
 					onTaskDelete={this.onTaskDelete}
-					onTaskEdit={this.onTaskEdit} />
+					onTaskEdit={this.onTaskEdit}
+					onChangeTheme={this.onChangeTheme} />
 
 				<AppHeader>
 					<h2 className="container__header">Board</h2>
