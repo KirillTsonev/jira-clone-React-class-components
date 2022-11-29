@@ -45,6 +45,12 @@
                 height: 25px
                 cursor: pointer
 
+.buttonContainer
+    display: flex
+    justify-content: space-between
+    align-items: center
+    width: 275px
+
 .taskHeader
     width: 1200px
     margin: 0 auto
@@ -79,20 +85,22 @@
         //to do orange
         //progress green
             //done yellow
-                
-.modal__hint1
+
+.modal__hint1, .modal__hint2, .modal__hint3, .modal__hint4
     visibility: hidden
     position: absolute
     background: #4569e7
     color: white
-    top: 182px
-    left: 100px
     padding: 25px 25px 15px 25px
     border-radius: 20px
-    height: 105px
     display: flex
     flex-direction: column
     justify-content: space-between
+                
+.modal__hint1
+    top: 182px
+    left: 100px
+    height: 105px
     &::after
         content: ""
         position: absolute
@@ -111,17 +119,8 @@
         border-bottom-color: #4569e7       
 
 .modal__hint2
-    visibility: hidden
-    position: absolute
-    background: #4569e7
-    color: white
-    padding: 25px 25px 15px 25px
-    border-radius: 20px
     width: 250px
     height: 280px
-    display: flex
-    flex-direction: column
-    justify-content: space-between
     top: 202px
     left: 820px
     &::after
@@ -134,17 +133,8 @@
         border-left-color: #4569e7
 
 .modal__hint3
-    visibility: hidden
-    position: absolute
-    background: #4569e7
-    color: white
-    padding: 25px 25px 15px 25px
-    border-radius: 20px
     width: 300px
     height: 120px
-    display: flex
-    flex-direction: column
-    justify-content: space-between
     top: 387px
     left: 883px
     &::after
@@ -157,17 +147,8 @@
         border-left-color: #4569e7
 
 .modal__hint4
-    visibility: hidden
-    position: absolute
-    background: #4569e7
-    color: white
-    padding: 25px 25px 15px 25px
-    border-radius: 20px
     width: 550px
     height: 120px
-    display: flex
-    flex-direction: column
-    justify-content: space-between
     top: 550px
     left: 100px
     &::after
@@ -234,9 +215,3 @@
         &-left
             transition: all .4s
             transform: translateX(22px)
-
-.buttonContainer
-    display: flex
-    justify-content: space-between
-    align-items: center
-    width: 275px

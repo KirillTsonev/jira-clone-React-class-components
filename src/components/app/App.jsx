@@ -25,10 +25,6 @@ class App extends Component {
 			this.setState(() => ({
 				darkTheme: true
 			}))
-		} else {
-			this.setState(() => ({
-				darkTheme: false
-			}))
 		}
 		this.ticketService.getTasks()
 			.then(this.onTaskRequest)

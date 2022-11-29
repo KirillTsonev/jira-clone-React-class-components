@@ -4,7 +4,6 @@ import pencil from "../../images/pencil.png"
 import cancel from "../../images/x.png"
 import green from "../../images/green-check.png"
 
-// import logo from "../../images/theme-light-dark.svg"
 import "./appTicketList.sass"
 
 class AppTicketList extends Component {
@@ -28,10 +27,6 @@ class AppTicketList extends Component {
         if (localStorage.getItem("ballLeft") && localStorage.getItem("ballLeft").length === 4) {
             this.setState(() => ({
                 ballLeft: true
-            }))
-        } else {
-            this.setState(() => ({
-                ballLeft: false
             }))
         }
         setTimeout(() => {
