@@ -1,8 +1,8 @@
 import { Component } from "react";
-import trash from "../../images/trash.png";
-import pencil from "../../images/pencil.png"
+import { ReactComponent as Trash } from "../../images/trash.svg";
+import { ReactComponent as Pencil }  from "../../images/pencil.svg"
 import cancel from "../../images/x.png"
-import green from "../../images/green-check.png"
+import green from "../../images/green-check.svg"
 
 import "./appTicketList.sass"
 
@@ -97,7 +97,7 @@ class AppTicketList extends Component {
     }
 
     onPencilPress = (id) => {
-        if (!this.state.toggleEdit.some(a => a === true)) {
+        if (!this.state.toggleEdit.some(a => a === true) && !this.state.toggleDelete.some(a => a === true)) {
             const arr = this.state.toggleEdit.map((a, i) => {
                 if (i === id) {
                     return true
@@ -108,7 +108,6 @@ class AppTicketList extends Component {
             this.setState(() => ({
                 title: this.props.tasks[id].title,
                 body: this.props.tasks[id].body,
-                pencilPressed: true,
                 id: id,
                 toggleEdit: arr
             }))
@@ -122,7 +121,6 @@ class AppTicketList extends Component {
         this.setState(() => ({
             title: "",
             body: "",
-            pencilPressed: false,
             toggleEdit: arr,
         }))
     }
@@ -145,14 +143,13 @@ class AppTicketList extends Component {
         this.setState(() => ({
             title: "",
             body: "",
-            pencilPressed: false,
             toggleEdit: arrEdit,
             toggleDelete: arrDelete,
         }))
     }
 
     onDeletePress = (id) => {
-        if (!this.state.toggleDelete.some(a => a === true)) {
+        if (!this.state.toggleDelete.some(a => a === true) && !this.state.toggleEdit.some(a => a === true)) {
             const arr = this.state.toggleDelete.map((a, i) => {
                 if (i === id) {
                     return true
@@ -195,8 +192,9 @@ class AppTicketList extends Component {
                     </div>
 
                     <div className="ticket__list__item-icons" >
-                        <img alt="pencil"
-                            src={pencil}
+                        <Pencil alt="pencil"
+                            fill={this.state.ballLeft ? "white" : "black"}
+                            className="pencil"
                             style={this.state.toggleEdit[i] ? { "display": "none" } : { "display": "block" }}
                             onClick={() => this.onPencilPress(i)} />
 
@@ -205,12 +203,12 @@ class AppTicketList extends Component {
                             style={this.state.toggleEdit[i] ? { "display": "block" } : { "display": "none" }}
                             onClick={() => this.onCancelPress(i)} />
 
-                        <img alt="trash"
-                            src={trash}
-                            style={this.state.toggleDelete[i] ? { "display": "none" } : { "display": "block" }}
-                            onClick={() => this.onDeletePress(i)} />
-
                         <div className="deleteContainer">
+                            <Trash alt="trash"
+                                fill={this.state.ballLeft ? "white" : "black"}
+                                className="trash"
+                                style={this.state.toggleDelete[i] ? { "display": "none" } : { "display": "block" }}
+                                onClick={() => this.onDeletePress(i)} />
                             <img alt="confirm"
                                 src={green}
                                 style={this.state.toggleDelete[i] ? { "display": "block" } : { "display": "none" }}
