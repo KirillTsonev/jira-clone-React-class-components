@@ -3,7 +3,6 @@ import AppTicketList from "../appTicketList/AppTicketList";
 import AppBoard from "../appBoard/AppBoard";
 import { Component } from "react";
 import TicketService from "../../services/TicketService";
-import ModalTutorial from "../modalTutorial/modalTutorial";
 // import logo from "../../images/theme-light-dark.svg"
 import "./app.sass"
 
@@ -96,8 +95,6 @@ class App extends Component {
 
 		return (
 			<div className={`container ${this.state.darkTheme ? "darkTheme" : null}`}>
-				<ModalTutorial/>
-
 				<AppHeader>
 					<h2 className="container__header">Task List</h2>
 				</AppHeader>

@@ -14,15 +14,39 @@ class AppTicketList extends Component {
         id: null,
         toggleEdit: [],
         toggleDelete: [],
+        counter: 1,
     }
 
     componentDidMount() {
+        // localStorage.clear()
+        if (localStorage.getItem("counter")) {
+            this.setState(() => ({
+                counter: +localStorage.getItem("counter")
+            }))
+        } else {
+            this.setState(() => ({
+                counter: 1
+            }))
+        }
         setTimeout(() => {
             this.setState(() => ({
                 toggleEdit: this.props.toggle,
                 toggleDelete: this.props.toggle,
             }))
         }, 500);
+    }
+
+    onNextPressed = () => {
+        this.setState(() => ({
+            counter: this.state.counter + 1
+        }))
+        localStorage.setItem("counter", `${this.state.counter + 1}`)
+    }
+
+    onTutorialPressed = () => {
+        this.setState(() => ({
+            counter: 1
+        }))
     }
 
     // componentDidUpdate(_prevProps, prevState) {
@@ -202,6 +226,49 @@ class AppTicketList extends Component {
     render() {
         return (
             <div>
+                <div className="modal__container">
+                    <div className={this.state.counter === 1 ? "modal__hint1 fadeIn" : "modal__hint1 fadeOut"}>
+                        <div className="modal__hint1-text">
+                            Enter your task's title and body in the fields above and press "Add task". That saves your task into a database so it's always available when you open this website.
+                        </div>
+
+                        <div className="modal__btn-container">
+                            <div className="modal__btn-btn" onClick={() => this.onNextPressed()}>Next</div>
+                        </div>
+                    </div>
+                    
+
+                    <div className={this.state.counter === 2 ? "modal__hint2 fadeIn" : "modal__hint2 fadeOut"}>
+                        <div className="modal__hint2-text">
+                            Click on the status of your task to change it from "To do" to "In progress" to "Done".<br></br>When you change it here, it also changes on the board below. You can also change the task status by clicking the task on the board.
+                        </div>
+
+                        <div className="modal__btn-container">
+                            <div className="modal__btn-btn" onClick={() => this.onNextPressed()}>Next</div>
+                        </div>
+                    </div>
+
+                    <div className={this.state.counter === 3 ? "modal__hint3 fadeIn" : "modal__hint3 fadeOut"}>
+                        <div className="modal__hint3-text">
+                            Use these buttons to edit or delete your tasks.
+                        </div>
+
+                        <div className="modal__btn-container">
+                            <div className="modal__btn-btn" onClick={() => this.onNextPressed()}>Next</div>
+                        </div>
+                    </div>
+
+                    <div className={this.state.counter === 4 ? "modal__hint4 fadeIn" : "modal__hint4 fadeOut"}>
+                        <div className="modal__hint4-text">
+                            Your tasks are sorted based on their status on the board below. Click on a task to progress its status to the next stage.
+                        </div>
+
+                        <div className="modal__btn-container">
+                            <div className="modal__btn-btn" onClick={() => this.onNextPressed()}>Next</div>
+                        </div>
+                    </div>
+                </div>
+
                 <div className="taskHeader">
                     <form onSubmit={this.state.title ? () => this.onTaskPost(this.state) : null}>
                         <input type="text" 
@@ -226,6 +293,8 @@ class AppTicketList extends Component {
                     <div className="button"
                         onClick={this.state.title ? () => this.onTaskEdit() : null}
                         style={!this.state.toggleEdit.some(a => a === true) ? {"display": "none"} : {"display": "block"}} >Edit task</div>
+
+                    <div className="tutorial" onClick={() => this.onTutorialPressed()}>?</div>
                 </div>
 
                 <div>
