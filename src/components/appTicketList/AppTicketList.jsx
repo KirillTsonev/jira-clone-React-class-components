@@ -179,17 +179,17 @@ class AppTicketList extends Component {
             return (
                 <div
                     key={i}
-                    className="ticket__list__item" >
+                    className={`ticket__list__item ${this.state.ballLeft ? "darkTheme" : null}`} >
 
                     <div className="ticket__list__item-title" >
                         {a.title}
                     </div>
 
-                    <div className="ticket__list__item-body" >
+                    <div className={`ticket__list__item-body ${this.state.ballLeft ? "darkTheme" : null}`} >
                         {a.body}
                     </div>
 
-                    <div className="ticket__list__item-status"
+                    <div className={`ticket__list__item-status ${this.state.ballLeft ? "darkTheme" : null}`}
                         onClick={() => this.onStatusChange(i)} >
                         {a.status}
                     </div>
@@ -226,7 +226,7 @@ class AppTicketList extends Component {
         })
 
         return (
-            <div className="ticket__list">
+            <div className={`ticket__list ${this.state.ballLeft ? "darkTheme" : null}`}>
                 {tasks}
             </div>
         )
@@ -282,14 +282,14 @@ class AppTicketList extends Component {
                     <form onSubmit={this.state.title ? () => this.onTaskPost(this.state) : null}>
                         <input type="text"
                             name="title"
-                            className="titleText"
+                            className={`titleText ${this.state.ballLeft ? "darkTheme" : null}`}
                             placeholder="Task title"
                             onChange={(e) => this.onTitleChange(e.target.value)}
                             value={this.state.title} />
 
                         <input type="text"
                             name="body"
-                            className="titleBody"
+                            className={`titleBody ${this.state.ballLeft ? "darkTheme" : null}`}
                             placeholder="Task body"
                             onChange={(e) => this.onBodyChange(e.target.value)}
                             value={this.state.body} />
@@ -304,7 +304,7 @@ class AppTicketList extends Component {
                             onClick={this.state.title ? () => this.onTaskEdit() : null}
                             style={!this.state.toggleEdit.some(a => a === true) ? { "display": "none" } : { "display": "block" }} >Edit task</div>
 
-                        <div className="tutorial" onClick={() => this.onTutorialPressed()}>?</div>
+                        <div className={`tutorial ${this.state.ballLeft ? "darkTheme" : null}`} onClick={() => this.onTutorialPressed()}>?</div>
                     
                         <div className="switch" onClick={() => this.onChangeTheme()}>
                             <div>🌞</div>

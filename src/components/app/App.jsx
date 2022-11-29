@@ -1,9 +1,10 @@
+import { Component } from "react";
+
 import AppHeader from "../appHeader/AppHeader";
 import AppTicketList from "../appTicketList/AppTicketList";
 import AppBoard from "../appBoard/AppBoard";
-import { Component } from "react";
 import TicketService from "../../services/TicketService";
-// import '../../style/style.sass'
+
 import "./app.sass"
 
 class App extends Component {
@@ -93,7 +94,7 @@ class App extends Component {
     }
 
 	render() {
-		const {tasks} = this.state
+		const {tasks, darkTheme} = this.state
 		const toggle = tasks.map(a => a = a.toggle)
 
 		return (
@@ -116,6 +117,7 @@ class App extends Component {
 				</AppHeader>
 
 				<AppBoard 
+					darkTheme={darkTheme}
 					tasks={tasks}
 					onStatusChange={this.onStatusChange} />
 			</div>
