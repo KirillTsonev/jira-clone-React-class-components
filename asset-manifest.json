@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/jira-clone-React-class-components/static/css/main.8dcf1a34.css",
+    "main.js": "/jira-clone-React-class-components/static/js/main.32890f8b.js",
+    "static/media/x.png": "/jira-clone-React-class-components/static/media/x.3d3ccd41b2e939984486.png",
+    "static/media/trash.svg": "/jira-clone-React-class-components/static/media/trash.8edb7a5970af16645c1260770f9354c0.svg",
+    "static/media/pencil.svg": "/jira-clone-React-class-components/static/media/pencil.980fc90d07afce572e0379c2ad7ce8ad.svg",
+    "index.html": "/jira-clone-React-class-components/index.html",
+    "static/media/green-check.svg": "/jira-clone-React-class-components/static/media/green-check.0ba05c58d223ababd6d6b6c2f2585497.svg",
+    "main.8dcf1a34.css.map": "/jira-clone-React-class-components/static/css/main.8dcf1a34.css.map",
+    "main.32890f8b.js.map": "/jira-clone-React-class-components/static/js/main.32890f8b.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.8dcf1a34.css",
+    "static/js/main.32890f8b.js"
+  ]
+}
