@@ -7,6 +7,19 @@ class BoardStatus extends Component {
         this.props.onStatusChange(id)
     }
 
+    statusColor = (status) => {
+        switch (status) {
+            case "To do":
+                return "todo"
+            case "In progress":   
+                return "inprogress" 
+            case "Done":
+                return "done"
+            default:
+                break;
+        }
+    }
+
     renderTasks = (arr, theme) => {
         const tasks = arr.map((a, i) => {
             if (a.status === this.props.status) {
@@ -14,7 +27,7 @@ class BoardStatus extends Component {
                     <div
                         key={i}
                         onClick={() => this.onStatusChange(i)}
-                        className={`board__column__item ${theme ? "darkTheme" : null}`}>
+                        className={`board__column__item ${theme ? "darkTheme" : null} ${this.statusColor(a.status)}`}>
     
                         <div className="board__column__item-title">{a.title}</div>
 

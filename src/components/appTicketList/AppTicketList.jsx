@@ -171,12 +171,25 @@ class AppTicketList extends Component {
         localStorage.setItem("ballLeft", !this.state.ballLeft)
     }
 
+    statusColor = (status) => {
+        switch (status) {
+            case "To do":
+                return "todo"
+            case "In progress":   
+                return "inprogress" 
+            case "Done":
+                return "done"
+            default:
+                break;
+        }
+    }
+
     renderTasks = (arr) => {
         const tasks = arr.map((a, i) => {
             return (
                 <div
                     key={i}
-                    className={`ticket__list__item ${this.state.ballLeft ? "darkTheme" : null}`} >
+                    className={`ticket__list__item ${this.state.ballLeft ? "darkTheme" : null} ${this.statusColor(a.status)}`} >
 
                     <div className="ticket__list__item-title" >
                         {a.title}

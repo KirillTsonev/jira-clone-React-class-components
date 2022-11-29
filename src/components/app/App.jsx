@@ -98,7 +98,7 @@ class App extends Component {
 		const toggle = tasks.map(a => a = a.toggle)
 
 		return (
-			<div className={`container ${this.state.darkTheme ? "darkTheme" : ""}`}>
+			<div className={`container ${this.state.darkTheme ? "darkThemeAll" : ""}`}>
 				<AppHeader>
 					<h2 className="container__header">Task List</h2>
 				</AppHeader>
