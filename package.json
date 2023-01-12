@@ -2,7 +2,7 @@
   "name": "14-jira",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://kirilltsonev.github.io/jira-clone-React-class-components/",
+  "homepage": "https://kirilltsonev.github.io/Jira-Clone_React-Class-Components/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
